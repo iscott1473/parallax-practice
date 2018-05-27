@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Parallax</title>
+    <link href = './styles.css' rel = 'stylesheet'>
+  </head>
+  <body>
+    <div class="img1">
+      <div class="ptext">
+        <span class="border">
+          Supreme Overlord Julia!!!!
+        </span>
+      </div>
+    </div>
+
+    <section class="section section-light">
+      <h2>
+        Section One
+      </h2>
+      <p>
+        Summore teckst
+      </p>
+    </section>
+
+    <div class="img2">
+      <div class="square-container">
+        <div class="square section-light" id = "left">
+          <h2>This is the first square</h2>
+        </div>
+        <div class="square section-dark" id = "right">
+          <h2>This is the second square</h2>
+        </div>
+      </div>
+    </div>
+
+    <section class="section section-dark">
+      <h2>
+        Section Two
+      </h2>
+      <p>
+        Even more text
+      </p>
+    </section>
+
+    <div class="img3">
+      <div class="ptext">
+        <span class="border">
+          Image three text
+        </span>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="grid">
+        <div class="one section-light animate"><h1>One</h1></div>
+        <div class="two section-dark animate"><h1>Two</h1></div>
+        <div class="three section-dark animate"><h1>Three</h1></div>
+        <div class="four section-light animate"><h1>Four</h1></div>
+      </div>
+    </section>
+
+    <div class="img4">
+      <div class="ptext">
+        <span class="border">
+          This is the last image
+        </span>
+      </div>
+    </div>
+    <script>
+      const leftDiv = document.getElementById('left');
+      const rightDiv = document.getElementById('right');
+      //---------------------------------------------------------------------------------------------------
+      //---------------------------------------------------------------------------------------------------
+      //This is for the scroll parallax effects
+      //---------------------------------------------------------------------------------------------------
+      //---------------------------------------------------------------------------------------------------
+
+      function Scroller(x, y, el){
+        this.x = x;
+        this.y = y;
+        this.element = el;
+        this.setTranslate = (xpos, ypos, element) => {
+        el.style.transform = "translate3d("+xpos+", "+ypos+"px, 0)";
+        }
+        this.scrollLoop = () => {
+          div = this.element
+          const currentY = div.getBoundingClientRect().top - window.innerHeight;
+          const staticY =  div.getBoundingClientRect().top + window.scrollY - window.innerHeight;
+          let xPos = window.scrollX;
+          let yPos = window.scrollY - staticY;  
+          console.log(currentY)
+          if (currentY <= 0){
+            this.setTranslate(this.x * xPos, this.y * yPos, div)
+          }
+        };
+      }
+      const leftDivParallax = new Scroller(1, -.2, leftDiv)
+      const rightDivParallax = new Scroller(1, .1, rightDiv)
+      //---------------------------------------------------------------------------------------------------
+      //---------------------------------------------------------------------------------------------------
+      //Jump in animations
+      //---------------------------------------------------------------------------------------------------
+      //---------------------------------------------------------------------------------------------------
+      function JumpIn(clss){
+        this.classList = clss;
+        this.jumpIn = () => {
+          const classes = document.getElementsByClassName(this.classList);
+          const myClasses = [...classes]
+          myClasses.forEach((element) => {
+            element.classList.add('now')
+          })
+        }
+      }
+      const jump = new JumpIn('animate');
+      jump.jumpIn();
+      window.addEventListener('scroll', leftDivParallax.scrollLoop, false);
+      window.addEventListener('scroll', rightDivParallax.scrollLoop, false);
+
+    </script>
+  </body>
+</html>
